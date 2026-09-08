@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<form class="panel form-narrow" method="post">
+  <h1>Вход в кабинет</h1>
+  <div class="field">
+    <label for="login">Логин или e-mail</label>
+    <input type="text" id="login" name="login" required value="{{ login_value }}">
+  </div>
+  <div class="field">
+    <label for="password">Пароль</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <label class="check"><input type="checkbox" name="remember" value="1"> Запомнить меня</label>
+  <button class="btn" type="submit">Войти</button>
+  <p class="muted" style="margin-top:14px">Нет аккаунта?
+     <a href="{{ url_for('register') }}">Зарегистрироваться</a></p>
+</form>
+{% endblock %}

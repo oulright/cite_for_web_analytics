@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Главная{% endblock %} — Курсоград</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="{{ url_for('index') }}">🎓 Курсо<span>град</span></a>
+    <nav class="nav">
+      <a href="{{ url_for('index') }}">Главная</a>
+      <a href="{{ url_for('courses') }}">Курсы</a>
+      <a href="{{ url_for('teachers') }}">Преподаватели</a>
+      <a href="{{ url_for('about') }}">О портале</a>
+      <a href="{{ url_for('contacts') }}">Контакты</a>
+      {% if current_user %}
+        <a href="{{ url_for('dashboard') }}">Кабинет</a>
+        <a class="btn btn-ghost btn-sm" href="{{ url_for('logout') }}">Выйти</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Вход</a>
+        <a class="btn btn-sm" href="{{ url_for('register') }}">Регистрация</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% if msgs %}
+      <div class="flashes">
+        {% for cat, m in msgs %}<div class="flash flash-{{ cat }}">{{ m }}</div>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© {{ year_now }} «Курсоград» — бесплатный образовательный портал.</p>
+    <p class="muted">Учебный проект: Flask + SQLite. Обучение бесплатное, ничего не продаём.</p>
+  </div>
+</footer>
+</body>
+</html>

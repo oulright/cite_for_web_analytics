@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Страница не найдена{% endblock %}
+{% block content %}
+<div class="panel" style="text-align:center">
+  <h1>404</h1>
+  <p class="muted">Такой страницы нет — возможно, курс или урок были удалены.</p>
+  <a class="btn" href="{{ url_for('index') }}">На главную</a>
+  <a class="btn btn-ghost" href="{{ url_for('courses') }}">К курсам</a>
+</div>
+{% endblock %}

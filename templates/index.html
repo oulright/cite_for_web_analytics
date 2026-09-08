@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Учитесь бесплатно на портале «Курсоград»</h1>
+  <p>Онлайн-курсы по разработке, аналитике, дизайну и языкам. Записывайтесь на
+     программы, проходите уроки и следите за собственным прогрессом в личном
+     кабинете.</p>
+  <p style="margin-top:22px">
+    {% if current_user %}
+      <a class="btn" href="{{ url_for('dashboard') }}">В личный кабинет</a>
+      <a class="btn btn-ghost" href="{{ url_for('courses') }}">Каталог курсов</a>
+    {% else %}
+      <a class="btn" href="{{ url_for('register') }}">Начать обучение</a>
+      <a class="btn btn-ghost" href="{{ url_for('login') }}">Войти</a>
+    {% endif %}
+  </p>
+</section>
+
+<div class="stats">
+  <div class="stat"><b>{{ stats.students }}</b>студентов</div>
+  <div class="stat"><b>{{ stats.courses }}</b>курсов</div>
+  <div class="stat"><b>{{ stats.lessons }}</b>уроков</div>
+  <div class="stat"><b>{{ stats.teachers }}</b>преподавателей</div>
+</div>
+
+<h2>Популярные курсы</h2>
+<div class="grid">
+  {% for c in popular %}
+    <div class="card">
+      <div class="chips"><span class="tag">{{ c.category }}</span>
+        <span class="tag tag-alt">{{ c.level }}</span></div>
+      <h3><a href="{{ url_for('course', course_id=c.id) }}">{{ c.title }}</a></h3>
+      <p class="muted">{{ c.teacher }} · {{ c.hours }} ч · {{ c.students }} записались</p>
+      <p>{{ c.description }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+<h2>Как проходит обучение</h2>
+<div class="grid">
+  <div class="card"><h3>1. Регистрация</h3>
+    <p class="muted">Аккаунт хранится в базе SQLite, пароль — только в виде хеша.</p></div>
+  <div class="card"><h3>2. Запись на курс</h3>
+    <p class="muted">Выбираете программу в каталоге и записываетесь одной кнопкой.</p></div>
+  <div class="card"><h3>3. Уроки и прогресс</h3>
+    <p class="muted">Отмечаете пройденные уроки — прогресс считается автоматически.</p></div>
+  <div class="card"><h3>4. Отзыв</h3>
+    <p class="muted">Оцениваете курс и помогаете другим студентам выбрать.</p></div>
+</div>
+
+<h2>Отзывы студентов</h2>
+{% if reviews %}
+  <div class="panel">
+  {% for r in reviews %}
+    <div class="review">
+      <div class="stars">{{ '★' * r.rating }}{{ '☆' * (5 - r.rating) }}</div>
+      <b>{{ r.username or 'Студент' }}</b> о курсе
+      <a href="{{ url_for('course', course_id=r.course_id) }}">«{{ r.title }}»</a>
+      <span class="muted">· {{ r.created_at }}</span>
+      <p>{{ r.text }}</p>
+    </div>
+  {% endfor %}
+  </div>
+{% else %}
+  <p class="muted">Отзывов пока нет — оставьте первый после прохождения курса.</p>
+{% endif %}
+{% endblock %}
