@@ -41,7 +41,9 @@
 <footer class="site-footer">
   <div class="container">
     <p>© {{ year_now }} «Курсоград» — бесплатный образовательный портал.</p>
-    <p class="muted">Учебный проект: Flask + SQLite. Обучение бесплатное, ничего не продаём.</p>
+    <p class="muted">Курсы по разработке, аналитике, дизайну и языкам. Обучение бесплатное,
+       ничего не продаём. <a href="{{ url_for('about') }}">О портале</a> ·
+       <a href="{{ url_for('contacts') }}">Контакты</a></p>
   </div>
 </footer>
 </body>

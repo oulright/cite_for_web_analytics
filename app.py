@@ -1,12 +1,16 @@
 """Обучающий портал «Курсоград» — Flask + SQLite."""
 import os
+import re
 import sqlite3
 from datetime import datetime
 from functools import wraps
 
 from flask import (Flask, flash, g, redirect, render_template, request,
                    session, url_for)
+from markupsafe import Markup, escape
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from seed import SEED_COURSES, SEED_LESSONS, SEED_TEACHERS
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "data", "app.db")
@@ -105,54 +109,9 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 """
 
-SEED_TEACHERS = [
-    ("Ирина Соколова", "Веб-разработка",
-     "10 лет во фронтенде, преподаёт HTML, CSS и JavaScript с нуля."),
-    ("Павел Дорохов", "Python и данные",
-     "Инженер данных, автор курсов по Python, SQL и аналитике."),
-    ("Мария Ким", "Дизайн интерфейсов",
-     "Продуктовый дизайнер, специализация — UX-исследования и прототипы."),
-    ("Артём Нечаев", "Иностранные языки",
-     "Преподаватель английского, готовит к международным экзаменам."),
-]
-
-SEED_COURSES = [
-    ("Основы HTML и CSS", "Веб-разработка", "Начальный", 24, 1,
-     "Вёрстка страниц с нуля: теги, блочная модель, флексбокс и адаптивность."),
-    ("JavaScript для начинающих", "Веб-разработка", "Начальный", 36, 1,
-     "Переменные, функции, DOM и первые интерактивные интерфейсы."),
-    ("Python: первый язык", "Программирование", "Начальный", 40, 2,
-     "Синтаксис, структуры данных, функции и работа с файлами."),
-    ("SQL и базы данных", "Аналитика", "Средний", 30, 2,
-     "Запросы SELECT, соединения, агрегации и проектирование таблиц."),
-    ("Аналитика данных на Python", "Аналитика", "Средний", 48, 2,
-     "Pandas, визуализация и построение отчётов по реальным датасетам."),
-    ("UX/UI: основы дизайна", "Дизайн", "Начальный", 28, 3,
-     "Принципы композиции, сетки, типографика и прототипирование."),
-    ("Исследование пользователей", "Дизайн", "Продвинутый", 22, 3,
-     "Интервью, CustDev, юзабилити-тесты и анализ результатов."),
-    ("Английский для IT", "Языки", "Средний", 32, 4,
-     "Техническая лексика, чтение документации и общение в команде."),
-]
-
-SEED_LESSONS = {
-    1: ["Как устроена веб-страница", "Основные теги HTML",
-        "Селекторы и свойства CSS", "Флексбокс и сетки", "Адаптивная вёрстка"],
-    2: ["Переменные и типы данных", "Условия и циклы", "Функции",
-        "Работа с DOM", "События и обработчики"],
-    3: ["Установка Python и первый скрипт", "Списки, словари, кортежи",
-        "Функции и модули", "Файлы и исключения"],
-    4: ["Что такое реляционная БД", "Запрос SELECT и фильтры",
-        "JOIN и подзапросы", "Агрегации и GROUP BY"],
-    5: ["Знакомство с pandas", "Очистка данных", "Группировки и сводные таблицы",
-        "Графики и отчёты"],
-    6: ["Что делает дизайнер", "Композиция и сетка", "Цвет и типографика",
-        "Прототип в Figma"],
-    7: ["Планирование исследования", "Проведение интервью",
-        "Юзабилити-тестирование"],
-    8: ["Лексика разработчика", "Чтение документации", "Митинги и созвоны",
-        "Письма и код-ревью"],
-}
+# Текст-заглушка, которым уроки заполнялись в первой версии портала.
+# Если в существующей базе остались такие уроки — заменяем их на полноценные.
+OLD_PLACEHOLDER = "Материал урока «%: краткая теория, примеры и практическое задание."
 
 
 def init_db():
@@ -166,14 +125,92 @@ def init_db():
             db.executemany(
                 "INSERT INTO courses (title, category, level, hours, teacher_id,"
                 " description) VALUES (?,?,?,?,?,?)", SEED_COURSES)
-            for cid, titles in SEED_LESSONS.items():
-                for i, t in enumerate(titles, start=1):
+            for cid, items in SEED_LESSONS.items():
+                for i, (title, content) in enumerate(items, start=1):
                     db.execute(
                         "INSERT INTO lessons (course_id, position, title, content)"
-                        " VALUES (?,?,?,?)",
-                        (cid, i, t, f"Материал урока «{t}»: краткая теория, "
-                                    f"примеры и практическое задание."))
+                        " VALUES (?,?,?,?)", (cid, i, title, content.strip()))
+        else:
+            # База создана старой версией: подтягиваем содержимое уроков,
+            # у которых до сих пор стоит заглушка. Прогресс студентов не трогаем.
+            for cid, items in SEED_LESSONS.items():
+                for i, (title, content) in enumerate(items, start=1):
+                    db.execute(
+                        "UPDATE lessons SET content=? WHERE course_id=? AND position=?"
+                        " AND title=? AND (content='' OR content LIKE ?)",
+                        (content.strip(), cid, i, title, OLD_PLACEHOLDER))
         db.commit()
+
+
+# ------------------------------------------------------- разметка уроков
+_INLINE_CODE = re.compile(r"`([^`]+)`")
+_INLINE_BOLD = re.compile(r"\*\*([^*]+)\*\*")
+
+
+def _inline(text):
+    """Экранирует текст и превращает `код` и **выделение** в HTML."""
+    html = str(escape(text))
+    html = _INLINE_CODE.sub(r"<code>\1</code>", html)
+    html = _INLINE_BOLD.sub(r"<strong>\1</strong>", html)
+    return html
+
+
+@app.template_filter("lesson_html")
+def lesson_html(text):
+    """Переводит лёгкую разметку урока в безопасный HTML.
+
+    Поддерживаются: абзацы (через пустую строку), ``## Подзаголовок``,
+    списки ``- `` и ``1. ``, блоки кода в тройных обратных кавычках,
+    а также `код` и **выделение** внутри строк.
+    """
+    out = []
+    lines = (text or "").replace("\r\n", "\n").split("\n")
+    i, n = 0, len(lines)
+    while i < n:
+        line = lines[i]
+        stripped = line.strip()
+        if not stripped:
+            i += 1
+            continue
+        if stripped.startswith("```"):
+            i += 1
+            code = []
+            while i < n and not lines[i].strip().startswith("```"):
+                code.append(lines[i])
+                i += 1
+            i += 1  # закрывающие ```
+            out.append("<pre><code>%s</code></pre>" % escape("\n".join(code)))
+            continue
+        if stripped.startswith("## "):
+            out.append("<h2>%s</h2>" % _inline(stripped[3:]))
+            i += 1
+            continue
+        if stripped.startswith("- "):
+            items = []
+            while i < n and lines[i].strip().startswith("- "):
+                items.append("<li>%s</li>" % _inline(lines[i].strip()[2:]))
+                i += 1
+            out.append("<ul>%s</ul>" % "".join(items))
+            continue
+        if re.match(r"^\d+\.\s", stripped):
+            items = []
+            while i < n and re.match(r"^\d+\.\s", lines[i].strip()):
+                items.append("<li>%s</li>" % _inline(
+                    re.sub(r"^\d+\.\s+", "", lines[i].strip())))
+                i += 1
+            out.append("<ol>%s</ol>" % "".join(items))
+            continue
+        # обычный абзац: собираем строки до пустой или до начала другого блока
+        para = []
+        while i < n:
+            s = lines[i].strip()
+            if (not s or s.startswith("```") or s.startswith("## ")
+                    or s.startswith("- ") or re.match(r"^\d+\.\s", s)):
+                break
+            para.append(s)
+            i += 1
+        out.append("<p>%s</p>" % _inline(" ".join(para)))
+    return Markup("\n".join(out))
 
 
 # ------------------------------------------------------------------- хелперы
@@ -379,8 +416,14 @@ def lesson(lesson_id):
     prev_l = siblings[idx - 1] if idx > 0 else None
     next_l = siblings[idx + 1] if idx < len(siblings) - 1 else None
     prog = course_progress(db, uid, l["course_id"])
+    done_ids = {r["lesson_id"] for r in db.execute(
+        "SELECT p.lesson_id FROM progress p JOIN lessons l ON l.id=p.lesson_id"
+        " WHERE p.user_id=? AND l.course_id=?", (uid, l["course_id"]))}
+    # ориентировочное время чтения: ~1000 знаков в минуту, но не меньше 3 минут
+    read_minutes = max(3, round(len(l["content"] or "") / 1000))
     return render_template("lesson.html", lesson=l, done=done, prev_l=prev_l,
-                           next_l=next_l, prog=prog, siblings=siblings)
+                           next_l=next_l, prog=prog, siblings=siblings,
+                           done_ids=done_ids, read_minutes=read_minutes)
 
 
 @app.route("/teachers")
@@ -499,14 +542,42 @@ def dashboard():
                            done_total=done_total, goals=goals)
 
 
+CATEGORY_NOTES = {
+    "Веб-разработка": "Вёрстка на HTML и CSS, JavaScript и первые интерактивные интерфейсы.",
+    "Программирование": "Python с нуля: синтаксис, структуры данных, функции, файлы и модули.",
+    "Аналитика": "SQL, pandas и построение отчётов и графиков по реальным данным.",
+    "Дизайн": "UX/UI, композиция и типографика, прототипы в Figma, исследования пользователей.",
+    "Языки": "Английский для работы в IT: документация, созвоны, переписка и код-ревью.",
+}
+
+CONTACT_TOPICS = ["Вопрос о курсе", "Проблема с аккаунтом", "Стать преподавателем",
+                  "Сотрудничество"]
+
+
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    db = get_db()
+    stats = {
+        "students": db.execute("SELECT COUNT(*) c FROM users").fetchone()["c"],
+        "courses": db.execute("SELECT COUNT(*) c FROM courses").fetchone()["c"],
+        "lessons": db.execute("SELECT COUNT(*) c FROM lessons").fetchone()["c"],
+        "teachers": db.execute("SELECT COUNT(*) c FROM teachers").fetchone()["c"],
+        "hours": db.execute("SELECT COALESCE(SUM(hours),0) c FROM courses").fetchone()["c"],
+    }
+    categories = db.execute(
+        "SELECT category, COUNT(*) n FROM courses GROUP BY category ORDER BY category"
+    ).fetchall()
+    teachers = db.execute("SELECT * FROM teachers ORDER BY name").fetchall()
+    return render_template("about.html", stats=stats, categories=categories,
+                           teachers=teachers, notes=CATEGORY_NOTES)
 
 
 @app.route("/contacts", methods=["GET", "POST"])
 def contacts():
     form = {"name": "", "email": "", "topic": "Вопрос о курсе", "body": ""}
+    # тему можно передать ссылкой, например /contacts?topic=Стать преподавателем
+    if request.args.get("topic") in CONTACT_TOPICS:
+        form["topic"] = request.args["topic"]
     if request.method == "POST":
         form = {k: request.form.get(k, "").strip() for k in form}
         errors = []
@@ -528,9 +599,7 @@ def contacts():
             db.commit()
             flash("Сообщение отправлено — ответим на указанную почту.", "success")
             return redirect(url_for("contacts"))
-    topics = ["Вопрос о курсе", "Проблема с аккаунтом", "Стать преподавателем",
-              "Сотрудничество"]
-    return render_template("contacts.html", form=form, topics=topics)
+    return render_template("contacts.html", form=form, topics=CONTACT_TOPICS)
 
 
 @app.errorhandler(404)
