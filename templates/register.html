@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<form class="panel form-narrow" method="post">
+  <h1>Регистрация студента</h1>
+  <div class="field">
+    <label for="username">Логин *</label>
+    <input type="text" id="username" name="username" required minlength="3"
+           value="{{ form.username }}">
+  </div>
+  <div class="field">
+    <label for="email">E-mail *</label>
+    <input type="email" id="email" name="email" required value="{{ form.email }}">
+  </div>
+  <div class="field">
+    <label for="full_name">Имя и фамилия</label>
+    <input type="text" id="full_name" name="full_name" value="{{ form.full_name }}">
+  </div>
+  <div class="field">
+    <label for="city">Город</label>
+    <input type="text" id="city" name="city" value="{{ form.city }}">
+  </div>
+  <div class="field">
+    <label for="goal">Цель обучения</label>
+    <select id="goal" name="goal">
+      <option value="">Не указывать</option>
+      {% for g in goals %}
+        <option value="{{ g }}" {% if form.goal == g %}selected{% endif %}>{{ g }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label for="password">Пароль * (мин. 6 символов)</label>
+    <input type="password" id="password" name="password" required minlength="6">
+  </div>
+  <div class="field">
+    <label for="password2">Повторите пароль *</label>
+    <input type="password" id="password2" name="password2" required minlength="6">
+  </div>
+  <label class="check"><input type="checkbox" name="agree" value="1" required>
+    Согласен с правилами портала</label>
+  <button class="btn" type="submit">Создать аккаунт</button>
+  <p class="muted" style="margin-top:14px">Уже учитесь у нас?
+     <a href="{{ url_for('login') }}">Войти</a></p>
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<h1>Контакты</h1>
+<p class="muted">Напишите нам — сообщение сохранится в базе данных портала.</p>
+<form class="panel form-narrow" method="post">
+  <div class="field">
+    <label for="name">Ваше имя *</label>
+    <input type="text" id="name" name="name" required value="{{ form.name }}">
+  </div>
+  <div class="field">
+    <label for="email">E-mail для ответа *</label>
+    <input type="email" id="email" name="email" required value="{{ form.email }}">
+  </div>
+  <div class="field">
+    <label for="topic">Тема обращения</label>
+    <select id="topic" name="topic">
+      {% for t in topics %}
+        <option value="{{ t }}" {% if form.topic == t %}selected{% endif %}>{{ t }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label for="body">Сообщение *</label>
+    <textarea id="body" name="body" required minlength="10">{{ form.body }}</textarea>
+  </div>
+  <button class="btn" type="submit">Отправить</button>
+</form>
+{% endblock %}

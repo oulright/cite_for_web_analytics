@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Курсы{% endblock %}
+{% block content %}
+<h1>Каталог курсов</h1>
+<form class="panel" method="get">
+  <div class="filters">
+    <div class="field">
+      <label for="q">Поиск по названию, описанию, преподавателю</label>
+      <input type="text" id="q" name="q" value="{{ q }}" placeholder="Например: Python">
+    </div>
+    <div class="field">
+      <label for="category">Направление</label>
+      <select id="category" name="category">
+        <option value="">Все направления</option>
+        {% for c in categories %}
+          <option value="{{ c }}" {% if c == category %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="level">Уровень</label>
+      <select id="level" name="level">
+        <option value="">Любой</option>
+        {% for l in levels %}
+          <option value="{{ l }}" {% if l == level %}selected{% endif %}>{{ l }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="max_hours">Длительность до, часов</label>
+      <input type="number" id="max_hours" name="max_hours" value="{{ max_hours }}" min="1" max="200">
+    </div>
+    <div class="field">
+      <label for="sort">Сортировка</label>
+      <select id="sort" name="sort">
+        <option value="title" {% if sort=='title' %}selected{% endif %}>По названию</option>
+        <option value="hours" {% if sort=='hours' %}selected{% endif %}>Сначала короткие</option>
+        <option value="hours_desc" {% if sort=='hours_desc' %}selected{% endif %}>Сначала длинные</option>
+      </select>
+    </div>
+    <div class="field">
+      <button class="btn" type="submit">Найти</button>
+      <a class="btn btn-ghost" href="{{ url_for('courses') }}">Сброс</a>
+    </div>
+  </div>
+</form>
+
+<p class="muted">Найдено курсов: {{ courses|length }}</p>
+<div class="grid">
+  {% for c in courses %}
+    <div class="card">
+      <div class="chips"><span class="tag">{{ c.category }}</span>
+        <span class="tag tag-alt">{{ c.level }}</span></div>
+      <h3><a href="{{ url_for('course', course_id=c.id) }}">{{ c.title }}</a></h3>
+      <p class="muted">{{ c.teacher }} · {{ c.hours }} ч · {{ c.lessons_n }} уроков</p>
+      <p>{{ c.description }}</p>
+      <p><a class="btn btn-ghost btn-sm" href="{{ url_for('course', course_id=c.id) }}">Подробнее</a></p>
+    </div>
+  {% else %}
+    <p>Ничего не найдено. Измените параметры фильтра.</p>
+  {% endfor %}
+</div>
+{% endblock %}

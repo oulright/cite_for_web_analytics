@@ -1,0 +1,91 @@
+:root{
+  --bg:#f4f6fb; --card:#fff; --ink:#16203a; --muted:#67718c;
+  --accent:#3457d5; --accent-dark:#2742a8; --accent-soft:#e7ecfd;
+  --ok:#17966b; --line:#e2e7f2;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.6 "Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1080px;margin:0 auto;padding:0 20px}
+
+.site-header{background:#fff;border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:10}
+.header-inner{display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:14px 20px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:700;color:var(--ink)}
+.logo span{color:var(--accent)}
+.nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.nav a{color:var(--ink);font-size:15px}
+.btn{display:inline-block;background:var(--accent);color:#fff!important;
+  padding:9px 18px;border-radius:9px;border:0;cursor:pointer;font:inherit;
+  font-size:15px}
+.btn:hover{background:var(--accent-dark);text-decoration:none}
+.btn-ghost{background:transparent;color:var(--accent)!important;
+  border:1px solid var(--accent)}
+.btn-ghost:hover{background:var(--accent-soft)}
+.btn-sm{padding:6px 12px;font-size:14px}
+
+main{padding:28px 20px 64px}
+h1{margin:.2em 0 .4em;font-size:32px}
+h2{font-size:23px;margin-top:1.6em}
+.muted{color:var(--muted)}
+
+.hero{background:linear-gradient(135deg,#eaf0ff,#fdfdff);
+  border:1px solid var(--line);border-radius:18px;padding:44px 34px;margin-bottom:26px}
+.hero p{max-width:640px;color:#41496b}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:20px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0;font-size:18px}
+.tag{display:inline-block;background:var(--accent-soft);color:var(--accent-dark);
+  border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600}
+.tag-alt{background:#e6f7f0;color:var(--ok)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+
+.stats{display:flex;gap:16px;flex-wrap:wrap;margin:22px 0}
+.stat{flex:1;min-width:140px;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:16px;text-align:center}
+.stat b{display:block;font-size:28px;color:var(--accent)}
+
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+.form-narrow{max-width:470px;margin:0 auto}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:14px;margin-bottom:5px;color:#3c4666}
+input[type=text],input[type=email],input[type=password],input[type=number],
+select,textarea{width:100%;padding:10px 12px;border:1px solid #cfd6e6;
+  border-radius:9px;background:#fbfcff;font:inherit;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);
+  border-color:transparent}
+textarea{min-height:110px;resize:vertical}
+.check{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:14px}
+.check input{width:auto}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));
+  gap:12px;align-items:end;margin-bottom:8px}
+
+.progress{background:#e8ecf6;border-radius:999px;height:10px;overflow:hidden;
+  margin:8px 0}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:999px}
+
+.lesson-row{display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.lesson-row:first-child{border-top:0}
+.done{color:var(--ok);font-weight:600}
+
+.flashes{margin-bottom:18px}
+.flash{padding:10px 14px;border-radius:9px;margin-bottom:8px;font-size:15px}
+.flash-success{background:#e6f7f0;color:#12784f}
+.flash-error{background:#fdeaea;color:#98232b}
+.flash-warning{background:#fdf4e0;color:#8a5c10}
+
+.review{border-top:1px solid var(--line);padding:14px 0}
+.review:first-child{border-top:0}
+.stars{color:#eaa61e;letter-spacing:2px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:9px;border-bottom:1px solid var(--line);text-align:left}
+.site-footer{border-top:1px solid var(--line);background:#fff;padding:22px 0;
+  font-size:14px}
+.two-col{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start}
+@media(max-width:760px){.two-col{grid-template-columns:1fr}}

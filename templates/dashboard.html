@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет{% endblock %}
+{% block content %}
+<h1>Личный кабинет</h1>
+
+<div class="stats">
+  <div class="stat"><b>{{ my_courses|length }}</b>курсов в обучении</div>
+  <div class="stat"><b>{{ done_total }}</b>пройденных уроков</div>
+  <div class="stat"><b>{{ current_user.created_at[:10] }}</b>дата регистрации</div>
+</div>
+
+<h2>Мои курсы</h2>
+{% for item in my_courses %}
+  <div class="panel" style="margin-bottom:14px">
+    <div class="chips"><span class="tag">{{ item.c.category }}</span>
+      <span class="tag tag-alt">{{ item.c.level }}</span></div>
+    <h3><a href="{{ url_for('course', course_id=item.c.id) }}">{{ item.c.title }}</a></h3>
+    <div class="progress"><i style="width: {{ item.p.pct }}%"></i></div>
+    <p class="muted">{{ item.p.done }} из {{ item.p.total }} уроков ({{ item.p.pct }}%)
+       · записан {{ item.c.enrolled_at }}</p>
+  </div>
+{% else %}
+  <p class="panel">Вы ещё не записались ни на один курс.
+     <a href="{{ url_for('courses') }}">Выбрать курс</a></p>
+{% endfor %}
+
+<h2>Данные аккаунта</h2>
+<div class="panel">
+  <table>
+    <tr><th>Логин</th><td>{{ current_user.username }}</td></tr>
+    <tr><th>E-mail</th><td>{{ current_user.email }}</td></tr>
+    <tr><th>Цель обучения</th><td>{{ current_user.goal or '—' }}</td></tr>
+    <tr><th>Город</th><td>{{ current_user.city or '—' }}</td></tr>
+  </table>
+</div>
+
+<h2>Редактировать профиль</h2>
+<form class="panel" method="post">
+  <div class="field">
+    <label for="full_name">Имя и фамилия</label>
+    <input type="text" id="full_name" name="full_name" value="{{ current_user.full_name }}">
+  </div>
+  <div class="field">
+    <label for="city">Город</label>
+    <input type="text" id="city" name="city" value="{{ current_user.city }}">
+  </div>
+  <div class="field">
+    <label for="goal">Цель обучения</label>
+    <select id="goal" name="goal">
+      <option value="">Не указывать</option>
+      {% for g in goals %}
+        <option value="{{ g }}" {% if current_user.goal == g %}selected{% endif %}>{{ g }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label for="about">О себе (до 500 символов)</label>
+    <textarea id="about" name="about" maxlength="500">{{ current_user.about }}</textarea>
+  </div>
+  <button class="btn" type="submit">Сохранить</button>
+</form>
+{% endblock %}

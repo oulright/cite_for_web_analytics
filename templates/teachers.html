@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Преподаватели{% endblock %}
+{% block content %}
+<h1>Преподаватели</h1>
+<p class="muted">Практикующие специалисты, которые ведут курсы портала.</p>
+<div class="grid">
+  {% for t in teachers %}
+    <div class="card">
+      <span class="tag">{{ t.role }}</span>
+      <h3>{{ t.name }}</h3>
+      <p>{{ t.bio }}</p>
+      <p class="muted">Курсов: {{ t.n }}</p>
+      <ul style="margin:0;padding-left:18px">
+        {% for c in by_teacher[t.id] %}
+          <li><a href="{{ url_for('course', course_id=c.id) }}">{{ c.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

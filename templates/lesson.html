@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.title }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('course', course_id=lesson.course_id) }}">← {{ lesson.course_title }}</a></p>
+
+<div class="two-col">
+  <div class="panel">
+    <span class="tag">Урок {{ lesson.position }}</span>
+    <h1>{{ lesson.title }}</h1>
+    <p>{{ lesson.content }}</p>
+    <p class="muted">Пройдите материал, выполните практическое задание и отметьте
+       урок как завершённый — прогресс сохранится в базе данных.</p>
+
+    <form method="post">
+      {% if done %}
+        <p class="done">✓ Урок пройден</p>
+        <button class="btn btn-ghost" type="submit" name="action" value="undo">
+          Снять отметку</button>
+      {% else %}
+        <button class="btn" type="submit" name="action" value="done">
+          Отметить как пройденный</button>
+      {% endif %}
+    </form>
+
+    <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
+      {% if prev_l %}
+        <a class="btn btn-ghost btn-sm" href="{{ url_for('lesson', lesson_id=prev_l.id) }}">← {{ prev_l.title }}</a>
+      {% endif %}
+      {% if next_l %}
+        <a class="btn btn-sm" href="{{ url_for('lesson', lesson_id=next_l.id) }}">{{ next_l.title }} →</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <aside class="panel">
+    <h3 style="margin-top:0">Прогресс курса</h3>
+    <div class="progress"><i style="width: {{ prog.pct }}%"></i></div>
+    <p class="muted">{{ prog.done }} из {{ prog.total }} уроков ({{ prog.pct }}%)</p>
+    <h3>Все уроки</h3>
+    {% for s in siblings %}
+      <div class="lesson-row">
+        <a href="{{ url_for('lesson', lesson_id=s.id) }}"
+           {% if s.id == lesson.id %}style="font-weight:700"{% endif %}>{{ s.position }}. {{ s.title }}</a>
+      </div>
+    {% endfor %}
+  </aside>
+</div>
+{% endblock %}
