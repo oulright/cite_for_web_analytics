@@ -4,12 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}Главная{% endblock %} — Курсоград</title>
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='icons/favicon.svg') }}">
+<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='icons/favicon.png') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="{{ url_for('index') }}">🎓 Курсо<span>град</span></a>
+    <a class="logo" href="{{ url_for('index') }}">
+      <span class="logo-icon">🎓</span>
+      Курсо<span>град</span>
+    </a>
     <nav class="nav">
       <a href="{{ url_for('index') }}">Главная</a>
       <a href="{{ url_for('courses') }}">Курсы</a>
@@ -17,11 +25,11 @@
       <a href="{{ url_for('about') }}">О портале</a>
       <a href="{{ url_for('contacts') }}">Контакты</a>
       {% if current_user %}
-        <a href="{{ url_for('dashboard') }}">Кабинет</a>
+        <a class="btn btn-cabinet btn-sm" href="{{ url_for('dashboard') }}">Кабинет</a>
         <a class="btn btn-ghost btn-sm" href="{{ url_for('logout') }}">Выйти</a>
       {% else %}
-        <a href="{{ url_for('login') }}">Вход</a>
-        <a class="btn btn-sm" href="{{ url_for('register') }}">Регистрация</a>
+        <a class="btn btn-ghost btn-sm" href="{{ url_for('login') }}">Вход</a>
+        <a class="btn btn-sm btn-register" href="{{ url_for('register') }}">Регистрация</a>
       {% endif %}
     </nav>
   </div>
@@ -40,7 +48,7 @@
 
 <footer class="site-footer">
   <div class="container">
-    <p>© {{ year_now }} «Курсоград» — бесплатный образовательный портал.</p>
+    <p style="margin-bottom:8px">© {{ year_now }} «Курсоград» — бесплатный образовательный портал.</p>
     <p class="muted">Курсы по разработке, аналитике, дизайну и языкам. Обучение бесплатное,
        ничего не продаём. <a href="{{ url_for('about') }}">О портале</a> ·
        <a href="{{ url_for('contacts') }}">Контакты</a></p>
