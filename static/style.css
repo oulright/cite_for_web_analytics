@@ -34,12 +34,12 @@ a:hover{color:var(--accent-dark)}
 .nav .btn{margin-left:8px}
 
 /* Registration button - ensure it doesn't blend with background on hover */
-.nav .btn-register{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3);transition:background 0.2s ease,box-shadow 0.2s ease}
-.nav .btn-register:hover{background:var(--accent-dark);color:#fff!important;border:0;box-shadow:0 4px 12px rgba(79,70,229,0.4)}
+.nav .btn-register{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3);transition:all 0.2s ease}
+.nav .btn-register:hover{background:linear-gradient(135deg,#4338ca 0%,#3730a3 100%);color:#fff!important;border:0;box-shadow:0 6px 16px rgba(79,70,229,0.5)}
 
 /* Cabinet button - special hover style to avoid white text on light background */
-.nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3);transition:background 0.2s ease,box-shadow 0.2s ease}
-.nav .btn-cabinet:hover{background:var(--accent-dark);color:#fff!important;border:0;box-shadow:0 4px 12px rgba(79,70,229,0.4)}
+.nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3);transition:all 0.2s ease}
+.nav .btn-cabinet:hover{background:linear-gradient(135deg,#4338ca 0%,#3730a3 100%);color:#fff!important;border:0;box-shadow:0 6px 16px rgba(79,70,229,0.5)}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
