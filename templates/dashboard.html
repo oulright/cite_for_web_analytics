@@ -6,7 +6,7 @@
 <div class="stats">
   <div class="stat"><b>{{ my_courses|length }}</b>курсов в обучении</div>
   <div class="stat"><b>{{ done_total }}</b>пройденных уроков</div>
-  <div class="stat"><b>{{ current_user.created_at[:10] }}</b>дата регистрации</div>
+  <div class="stat"><b>{{ current_user.created_at[:10] if current_user.created_at else '—' }}</b>дата регистрации</div>
 </div>
 
 <h2>Мои курсы</h2>
