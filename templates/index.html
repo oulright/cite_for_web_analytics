@@ -11,7 +11,7 @@
       <a class="btn btn-lg" href="{{ url_for('dashboard') }}">В личный кабинет</a>
       <a class="btn btn-lg btn-ghost" href="{{ url_for('courses') }}">Каталог курсов</a>
     {% else %}
-      <a class="btn btn-lg" href="{{ url_for('register') }}">Начать обучение</a>
+      <a class="btn btn-start-learning btn-lg" href="{{ url_for('register') }}">Начать обучение</a>
       <a class="btn btn-lg btn-ghost" href="{{ url_for('login') }}">Войти</a>
     {% endif %}
   </div>
