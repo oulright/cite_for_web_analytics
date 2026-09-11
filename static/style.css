@@ -20,7 +20,7 @@ a:hover{color:var(--accent-dark)}
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;
   box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:16px 24px;flex-wrap:wrap;margin-bottom:24px}
+  gap:20px;padding:16px 24px;flex-wrap:wrap}
 .logo{font-size:22px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;
   transition:transform 0.2s ease}
 .logo:hover{transform:translateX(3px);text-decoration:none}
@@ -38,12 +38,8 @@ a:hover{color:var(--accent-dark)}
 .nav .btn-register:hover{background:var(--accent-dark);color:#fff!important;transform:translateY(-2px)}
 
 /* Cabinet button - special hover style to avoid white text on light background */
-.nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3)}
-.nav .btn-cabinet:hover{background:var(--accent-dark);color:#fff!important;border:0;box-shadow:0 4px 12px rgba(79,70,229,0.4);transform:none}
-
-/* Prevent flashing on cabinet button - ensure stable transition */
-.nav .btn-cabinet{transition:background 0.2s ease,box-shadow 0.2s ease;opacity:1!important}
-.nav .btn-cabinet:hover{opacity:1!important}
+.nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3);transition:background 0.2s ease,box-shadow 0.2s ease;opacity:1!important}
+.nav .btn-cabinet:hover{background:var(--accent-dark);color:#fff!important;border:0;box-shadow:0 4px 12px rgba(79,70,229,0.4);transform:none;opacity:1!important}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
