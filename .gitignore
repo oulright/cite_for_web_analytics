@@ -1,16 +1,28 @@
 ```gitignore
-# Python
-__pycache__/
+# Compiled and build artifacts
 *.pyc
-*.pyo
-*.pyd
+__pycache__/
+*.o
+*.obj
+dist/
+build/
+target/
 
-# Database
-data/app.db
+# Dependencies
+.venv/
+venv/
+node_modules/
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
 
 # Logs and temp files
 *.log
 *.tmp
+*.swp
+*.swo
 
 # Environment
 .env
@@ -21,7 +33,7 @@ data/app.db
 .vscode/
 .idea/
 
-# Dependencies
-.venv/
-venv/
+# OS specific
+.DS_Store
+Thumbs.db
 ```

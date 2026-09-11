@@ -18,7 +18,7 @@ a:hover{color:var(--accent-dark)}
 /* Header */
 .site-header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;
-  box-shadow:0 1px 3px rgba(0,0,0,0.05);padding:12px 0}
+  box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;
   gap:20px;padding:16px 24px;flex-wrap:wrap}
 .logo{font-size:22px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;
@@ -36,6 +36,9 @@ a:hover{color:var(--accent-dark)}
 /* Cabinet button - special hover style to avoid white text on light background */
 .nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important}
 .nav .btn-cabinet:hover{background:var(--accent-dark);color:#fff!important;border-color:var(--accent-dark)}
+
+/* Prevent flashing on cabinet button - ensure stable transition */
+.nav .btn-cabinet,.nav .btn-cabinet:hover{transition:background 0.2s ease,color 0.2s ease,border-color 0.2s ease}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -131,7 +134,10 @@ textarea{min-height:130px;resize:vertical;line-height:1.6}
   gap:16px;align-items:end;margin-bottom:24px}
 /* Make all filter fields the same height */
 .filters .field{display:flex;flex-direction:column}
-.filters .field input,.filters .field select{flex:1}
+.filters .field input,.filters .field select{flex:1;height:44px}
+.filters .field .btn,.filters .field a.btn{height:44px;align-items:center;justify-content:center;padding:0 16px;font-size:15px}
+.filters .field:last-child{display:flex;flex-direction:row;gap:8px}
+.filters .field:last-child .btn{flex:1}
 
 /* Progress bar */
 .progress{background:#e2e8f0;border-radius:999px;height:12px;overflow:hidden;
