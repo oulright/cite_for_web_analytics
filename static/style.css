@@ -18,9 +18,9 @@ a:hover{color:var(--accent-dark)}
 /* Header */
 .site-header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;
-  box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:24px}
+  box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:16px 24px;flex-wrap:wrap}
+  gap:20px;padding:16px 24px;flex-wrap:wrap;margin-bottom:24px}
 .logo{font-size:22px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;
   transition:transform 0.2s ease}
 .logo:hover{transform:translateX(3px);text-decoration:none}
@@ -33,13 +33,17 @@ a:hover{color:var(--accent-dark)}
 .nav a:hover{background:var(--accent-soft);color:var(--accent);text-decoration:none}
 .nav .btn{margin-left:8px}
 
+/* Registration button - ensure it doesn't blend with background on hover */
+.nav .btn-register{background:var(--accent-gradient);color:#fff!important}
+.nav .btn-register:hover{background:var(--accent-dark);color:#fff!important;transform:translateY(-2px)}
+
 /* Cabinet button - special hover style to avoid white text on light background */
-.nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important}
-.nav .btn-cabinet:hover{background:var(--accent-dark);color:#fff!important;border-color:var(--accent-dark)}
+.nav .btn-cabinet{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3)}
+.nav .btn-cabinet:hover{background:var(--accent-dark);color:#fff!important;border:0;box-shadow:0 4px 12px rgba(79,70,229,0.4);transform:none}
 
 /* Prevent flashing on cabinet button - ensure stable transition */
-.nav .btn-cabinet{transition:background 0.2s ease,border-color 0.2s ease;opacity:1}
-.nav .btn-cabinet:hover{opacity:1}
+.nav .btn-cabinet{transition:background 0.2s ease,box-shadow 0.2s ease;opacity:1!important}
+.nav .btn-cabinet:hover{opacity:1!important}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -56,7 +60,7 @@ a:hover{color:var(--accent-dark)}
 .btn-lg{padding:14px 28px;font-size:16px;border-radius:12px}
 
 /* Main content */
-main{padding:60px 24px 100px;min-height:calc(100vh - 200px)}
+main{padding:24px 24px 100px;min-height:calc(100vh - 200px)}
 h1{margin:0 0 20px;font-size:36px;font-weight:800;line-height:1.2;color:var(--ink)}
 h2{font-size:26px;font-weight:700;margin:50px 0 24px;color:var(--ink)}
 h3{font-size:19px;font-weight:600;margin:0}
