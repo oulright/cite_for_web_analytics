@@ -18,7 +18,7 @@ a:hover{color:var(--accent-dark)}
 /* Header */
 .site-header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;
-  box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+  box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:24px}
 .header-inner{display:flex;align-items:center;justify-content:space-between;
   gap:20px;padding:16px 24px;flex-wrap:wrap}
 .logo{font-size:22px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;
@@ -45,17 +45,18 @@ a:hover{color:var(--accent-dark)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
   background:var(--accent-gradient);color:#fff!important;
   padding:11px 22px;border-radius:10px;border:0;cursor:pointer;
-  font:600 15px inherit;transition:background 0.2s ease,box-shadow 0.2s ease;box-shadow:0 2px 4px rgba(79,70,229,0.3)}
-.btn:hover{box-shadow:0 4px 12px rgba(79,70,229,0.4);text-decoration:none}
+  font:600 15px inherit;transition:all 0.2s ease;box-shadow:0 2px 4px rgba(79,70,229,0.3)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(79,70,229,0.4);
+  text-decoration:none}
 .btn:active{transform:translateY(0)}
 .btn-ghost{background:transparent;color:var(--accent)!important;
-  border:2px solid var(--accent-soft);box-shadow:none;transition:background 0.2s ease,border-color 0.2s ease}
+  border:2px solid var(--accent-soft);box-shadow:none}
 .btn-ghost:hover{background:var(--accent-soft);border-color:var(--accent)}
 .btn-sm{padding:7px 14px;font-size:14px;border-radius:8px}
 .btn-lg{padding:14px 28px;font-size:16px;border-radius:12px}
 
 /* Main content */
-main{padding:48px 24px 100px;min-height:calc(100vh - 200px)}
+main{padding:60px 24px 100px;min-height:calc(100vh - 200px)}
 h1{margin:0 0 20px;font-size:36px;font-weight:800;line-height:1.2;color:var(--ink)}
 h2{font-size:26px;font-weight:700;margin:50px 0 24px;color:var(--ink)}
 h3{font-size:19px;font-weight:600;margin:0}
