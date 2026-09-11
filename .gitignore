@@ -1,3 +1,43 @@
+```gitignore
+# Compiled and binary files
+*.pyc
 __pycache__/
-data/
-*.db
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+
+# Dependencies
+node_modules/
+venv/
+.venv/
+.env
+.env.local
+.env.*
+
+# Build and distribution
+dist/
+build/
+target/
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editors and IDEs
+.vscode/
+.idea/
+```
