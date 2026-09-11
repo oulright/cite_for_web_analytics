@@ -1,0 +1,14 @@
+services:
+  flask-app:
+    build: .
+    container_name: cite-flask
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    networks:
+      - first_site_network
+
+networks:
+  first_site_network:
+    external: true
+    name: saiga_default
