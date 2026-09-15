@@ -15,8 +15,20 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="{{ url_for('index') }}">
-      <span class="logo-icon">🎓</span>
-      Курсо<span>град</span>
+      <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;">
+        <g fill="#4f46e5">
+          <!-- Верхняя «доска» (ромб) -->
+          <path d="M50 18 L92 38 L50 58 L8 38 Z"/>
+          <!-- Корпус шапочки -->
+          <path d="M22 45 L22 68 Q22 82 50 82 Q78 82 78 68 L78 45 L50 58 Z"/>
+          <!-- Кисточка: нить -->
+          <path d="M92 38 L92 60" stroke="#4f46e5" stroke-width="2.5"
+                fill="none" stroke-linecap="round"/>
+          <!-- Кисточка: узел -->
+          <circle cx="92" cy="64" r="3.5" fill="#4f46e5"/>
+        </g>
+      </svg>
+      Курсоград
     </a>
     <nav class="nav">
       <a href="{{ url_for('index') }}">Главная</a>
@@ -53,29 +65,34 @@
        ничего не продаём. <a href="{{ url_for('about') }}">О портале</a> ·
        <a href="{{ url_for('contacts') }}">Контакты</a></p>
 
-      <!-- Yandex.Metrika informer -->
-      <a href="https://metrika.yandex.ru/stat/?id=112506115&amp;from=informer" target="_blank" rel="nofollow">
-          <img src="https://informer.yandex.ru/informer/112506115/2_1_FFFFFFFF_EFEFEFFF_0_pageviews"
-               style="width:80px; height:31px; border:0;"
-               alt="Яндекс.Метрика"
-               title="Яндекс.Метрика: данные за сегодня (просмотры)"
-              />
-      </a>
-      <!-- /Yandex.Metrika informer -->
+    <div class="legal-links">
+      <a href="{{ url_for('privacy_policy') }}">Политика обработки персональных данных</a> ·
+      <a href="{{ url_for('user_agreement') }}">Пользовательское соглашение</a>
+    </div>
 
-      <!-- Yandex.Metrika counter -->
-      <script type="text/javascript">
-          (function(m,e,t,r,i,k,a){
-              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-              m[i].l=1*new Date();
-              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-          })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112506115', 'ym');
+     <!-- Yandex.Metrika informer -->
+     <a href="https://metrika.yandex.ru/stat/?id=112506115&amp;from=informer" target="_blank" rel="nofollow">
+         <img src="https://informer.yandex.ru/informer/112506115/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+              style="width:88px; height:31px; border:0;"
+              alt="Яндекс.Метрика"
+              title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
+             class="ym-advanced-informer" data-cid="112506115" data-lang="ru"/>
+     </a>
+     <!-- /Yandex.Metrika informer -->
 
-          ym(112506115, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-      </script>
-      <noscript><div><img src="https://mc.yandex.ru/watch/112506115" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-      <!-- /Yandex.Metrika counter -->
+     <!-- Yandex.Metrika counter -->
+     <script type="text/javascript">
+         (function(m,e,t,r,i,k,a){
+             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+             m[i].l=1*new Date();
+             for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+         })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112506115', 'ym');
+
+         ym(112506115, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+     </script>
+     <noscript><div><img src="https://mc.yandex.ru/watch/112506115" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+     <!-- /Yandex.Metrika counter -->
 
       <!--LiveInternet counter--><a href="https://www.liveinternet.ru/click"
       target="_blank"><img id="licnt4935" width="31" height="31" style="border:0"
@@ -89,6 +106,120 @@
       (document,screen)</script>
       <!--/LiveInternet-->
 
+    <!-- Top100 (Kraken) Counter -->
+    <script>
+        (function (w, d, c) {
+        (w[c] = w[c] || []).push(function() {
+            var options = {
+                project: 7752516,
+            };
+            try {
+                w.top100Counter = new top100(options);
+            } catch(e) { }
+        });
+        var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src =
+        (d.location.protocol == "https:" ? "https:" : "http:") +
+        "//st.top100.ru/top100/top100.js";
+
+        if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+    })(window, document, "_top100q");
+    </script>
+    <noscript>
+        <img src="//counter.rambler.ru/top100.cnt?pid=7752516" alt="Топ-100" />
+    </noscript>
+    <!-- END Top100 (Kraken) Counter -->
+
+    <!-- Всплывающее окно согласия на обработку персональных данных -->
+    <div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none;">
+      <div class="cookie-consent-content">
+        <h3>Мы используем cookie и обрабатываем данные</h3>
+        <p>Сайт использует файлы cookie, Яндекс.Метрику, SberAds и LiveInternet для улучшения работы. Продолжая использовать сайт, вы соглашаетесь с 
+          <a href="{{ url_for('privacy_policy') }}" target="_blank">Политикой обработки персональных данных</a> и 
+          <a href="{{ url_for('user_agreement') }}" target="_blank">Пользовательским соглашением</a>.
+        </p>
+        <button id="accept-cookies-btn" class="btn btn-primary">Принять</button>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        var modal = document.getElementById('cookie-consent-modal');
+        var acceptBtn = document.getElementById('accept-cookies-btn');
+        
+        // Проверяем, было ли уже дано согласие
+        if (!localStorage.getItem('cookiesAccepted')) {
+          // Показываем модальное окно с небольшой задержкой после загрузки страницы
+          setTimeout(function() {
+            modal.style.display = 'flex';
+          }, 500);
+        }
+        
+        // Обработчик кнопки принятия
+        if (acceptBtn) {
+          acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            modal.style.display = 'none';
+          });
+        }
+      })();
+    </script>
+
+    <style>
+      .cookie-consent-modal {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        padding: 16px 20px;
+        max-width: 600px;
+        width: calc(100% - 40px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .cookie-consent-content h3 {
+        margin: 0 0 6px 0;
+        font-size: 14px;
+        color: #1a1a2e;
+      }
+      .cookie-consent-content p {
+        margin: 0 0 10px 0;
+        font-size: 11px;
+        line-height: 1.35;
+        color: #444;
+      }
+      .cookie-consent-content a {
+        color: #6366f1;
+        text-decoration: underline;
+      }
+      .cookie-consent-content a:hover {
+        text-decoration: none;
+      }
+      .cookie-consent-content .btn {
+        background: #6366f1;
+        color: white;
+        border: none;
+        padding: 7px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .cookie-consent-content .btn:hover {
+        background: #4f46e5;
+      }
+    </style>
   </div>
 </footer>
 </body>

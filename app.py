@@ -602,6 +602,16 @@ def contacts():
     return render_template("contacts.html", form=form, topics=CONTACT_TOPICS)
 
 
+@app.route("/privacy-policy")
+def privacy_policy():
+    return render_template("privacy_policy.html")
+
+
+@app.route("/user-agreement")
+def user_agreement():
+    return render_template("user_agreement.html")
+
+
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html"), 404
