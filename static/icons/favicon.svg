@@ -6,5 +6,9 @@
     </linearGradient>
   </defs>
   <rect width="100" height="100" rx="20" fill="url(#grad)"/>
-  <text x="50" y="70" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">К</text>
+  <!-- Выпускная шляпа -->
+  <path d="M50 25 L85 40 L50 55 L15 40 Z" fill="white"/>
+  <path d="M50 55 L50 75" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="50" cy="79" r="4" fill="white"/>
+  <path d="M50 25 L85 40 L50 55 L15 40 Z" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
 </svg>
