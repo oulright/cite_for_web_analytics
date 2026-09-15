@@ -1,7 +1,59 @@
-The modified files (`static/icons/favicon.svg` and `templates/base.html`) are source files and do not require any new ignore rules. The existing .gitignore is empty and there are no build artifacts, dependencies, or temporary files in the changes that would necessitate adding ignore patterns.
+# Examples 1:
+# Input:
+# ### Added files:
+# [src/main.py, README.md, config.json]
+# 
+# ### Deleted files:
+# [old/unused.py]
+# ### Modified files:
+# [utils.py]
+# ###current .gitignore Content
+# (empty)
+# Expected Output:
+# (empty — output nothing)
 
-Therefore, no modifications to .gitignore are needed.
+# Example 2 (Project with artifacts):
+# Input:
+# ### Added files:
+# [pycache/main.cpython-310.pyc, dist/app.js, .env.local, .vscode/settings.json
+# 
+# ### Deleted files:
+#     []
+# 
+# ### Modified files:
+# []
+# ### current .gitignore Content
+# *.log
+# Expected Output:
+#     #Compiled and build artifacts
+#     *.pyc
+#     pycache/
+#     *.o
+#     *.obj
+#     dist/
+#     build/
+#     #Dependencies
+#     .venv/
+#     venv/
+#     node_modules/
+#     #Logs and temp files
+#     *.log
+#     *.tmp
+#     *.swp
+#     #Environment
+#     .env
+#     .env.local
+#     .env.
+#     #Editors
+#     .vscode/
+#     .idea/
+#     #Original rules preserved
+#     *.log
 
-```text
+# Current case:
+# Added files: []
+# Deleted files: []
+# Modified files: ['static/icons/favicon.svg', 'templates/base.html']
+# These are all source files (.svg, .html) - no build artifacts, dependencies, or temp files
 
-```
+# Since only source/config files were modified and no build artifacts, dependencies, or temp files are present, output nothing.

@@ -15,7 +15,19 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="{{ url_for('index') }}">
-      <span class="logo-icon">🎓</span>
+      <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;">
+        <g fill="#4f46e5">
+          <!-- Верхняя «доска» (ромб) -->
+          <path d="M50 18 L92 38 L50 58 L8 38 Z"/>
+          <!-- Корпус шапочки -->
+          <path d="M22 45 L22 68 Q22 82 50 82 Q78 82 78 68 L78 45 L50 58 Z"/>
+          <!-- Кисточка: нить -->
+          <path d="M92 38 L92 60" stroke="#4f46e5" stroke-width="2.5"
+                fill="none" stroke-linecap="round"/>
+          <!-- Кисточка: узел -->
+          <circle cx="92" cy="64" r="3.5" fill="#4f46e5"/>
+        </g>
+      </svg>
       Курсоград
     </a>
     <nav class="nav">
@@ -127,12 +139,11 @@
     <!-- Всплывающее окно согласия на обработку персональных данных -->
     <div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none;">
       <div class="cookie-consent-content">
-        <h3>Мы используем файлы cookie и обрабатываем персональные данные</h3>
-        <p>Этот сайт использует файлы cookie для улучшения пользовательского опыта, а также обрабатывает ваши персональные данные в соответствии с 
+        <h3>Мы используем cookie и обрабатываем данные</h3>
+        <p>Сайт использует файлы cookie, Яндекс.Метрику, SberAds и LiveInternet для улучшения работы. Продолжая использовать сайт, вы соглашаетесь с 
           <a href="{{ url_for('privacy_policy') }}" target="_blank">Политикой обработки персональных данных</a> и 
           <a href="{{ url_for('user_agreement') }}" target="_blank">Пользовательским соглашением</a>.
         </p>
-        <p>Нажимая кнопку «Принять», вы даёте согласие на обработку ваших персональных данных и использование файлов cookie.</p>
         <button id="accept-cookies-btn" class="btn btn-primary">Принять</button>
       </div>
     </div>
@@ -168,22 +179,23 @@
         background: #fff;
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        padding: 20px;
-        max-width: 500px;
+        padding: 16px 20px;
+        max-width: 600px;
         width: calc(100% - 40px);
         z-index: 10000;
         display: flex;
         align-items: center;
+        gap: 16px;
       }
       .cookie-consent-content h3 {
-        margin: 0 0 10px 0;
-        font-size: 16px;
+        margin: 0 0 6px 0;
+        font-size: 14px;
         color: #1a1a2e;
       }
       .cookie-consent-content p {
-        margin: 0 0 14px 0;
-        font-size: 13px;
-        line-height: 1.4;
+        margin: 0 0 10px 0;
+        font-size: 11px;
+        line-height: 1.35;
         color: #444;
       }
       .cookie-consent-content a {
@@ -197,11 +209,12 @@
         background: #6366f1;
         color: white;
         border: none;
-        padding: 8px 20px;
+        padding: 7px 16px;
         border-radius: 6px;
         cursor: pointer;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
+        white-space: nowrap;
       }
       .cookie-consent-content .btn:hover {
         background: #4f46e5;

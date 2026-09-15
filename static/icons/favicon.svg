@@ -1,3 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <text x="50" y="75" font-family="Arial, sans-serif" font-size="100" fill="#4f46e5" text-anchor="middle">🎓</text>
+  <g fill="#4f46e5">
+    <!-- Верхняя «доска» (ромб) -->
+    <path d="M50 18 L92 38 L50 58 L8 38 Z"/>
+    <!-- Корпус шапочки -->
+    <path d="M22 45 L22 68 Q22 82 50 82 Q78 82 78 68 L78 45 L50 58 Z"/>
+    <!-- Кисточка: нить -->
+    <path d="M92 38 L92 60" stroke="#4f46e5" stroke-width="2.5"
+          fill="none" stroke-linecap="round"/>
+    <!-- Кисточка: узел -->
+    <circle cx="92" cy="64" r="3.5" fill="#4f46e5"/>
+  </g>
 </svg>
