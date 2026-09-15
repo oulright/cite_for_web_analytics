@@ -16,7 +16,7 @@
   <div class="container header-inner">
     <a class="logo" href="{{ url_for('index') }}">
       <span class="logo-icon">🎓</span>
-      Курсо<span>град</span>
+      Курсоград
     </a>
     <nav class="nav">
       <a href="{{ url_for('index') }}">Главная</a>
@@ -52,6 +52,11 @@
     <p class="muted">Курсы по разработке, аналитике, дизайну и языкам. Обучение бесплатное,
        ничего не продаём. <a href="{{ url_for('about') }}">О портале</a> ·
        <a href="{{ url_for('contacts') }}">Контакты</a></p>
+
+    <div class="legal-links">
+      <a href="{{ url_for('privacy_policy') }}">Политика обработки персональных данных</a> ·
+      <a href="{{ url_for('user_agreement') }}">Пользовательское соглашение</a>
+    </div>
 
      <!-- Yandex.Metrika informer -->
      <a href="https://metrika.yandex.ru/stat/?id=112506115&amp;from=informer" target="_blank" rel="nofollow">
@@ -118,6 +123,92 @@
         <img src="//counter.rambler.ru/top100.cnt?pid=7752516" alt="Топ-100" />
     </noscript>
     <!-- END Top100 (Kraken) Counter -->
+
+    <!-- Всплывающее окно согласия на обработку персональных данных -->
+    <div id="cookie-consent-modal" class="cookie-consent-modal" style="display:none;">
+      <div class="cookie-consent-content">
+        <h3>Мы используем файлы cookie и обрабатываем персональные данные</h3>
+        <p>Этот сайт использует файлы cookie для улучшения пользовательского опыта, а также обрабатывает ваши персональные данные в соответствии с 
+          <a href="{{ url_for('privacy_policy') }}" target="_blank">Политикой обработки персональных данных</a> и 
+          <a href="{{ url_for('user_agreement') }}" target="_blank">Пользовательским соглашением</a>.
+        </p>
+        <p>Нажимая кнопку «Принять», вы даёте согласие на обработку ваших персональных данных и использование файлов cookie.</p>
+        <button id="accept-cookies-btn" class="btn btn-primary">Принять</button>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        var modal = document.getElementById('cookie-consent-modal');
+        var acceptBtn = document.getElementById('accept-cookies-btn');
+        
+        // Проверяем, было ли уже дано согласие
+        if (!localStorage.getItem('cookiesAccepted')) {
+          // Показываем модальное окно с небольшой задержкой после загрузки страницы
+          setTimeout(function() {
+            modal.style.display = 'flex';
+          }, 500);
+        }
+        
+        // Обработчик кнопки принятия
+        if (acceptBtn) {
+          acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            modal.style.display = 'none';
+          });
+        }
+      })();
+    </script>
+
+    <style>
+      .cookie-consent-modal {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        padding: 24px;
+        max-width: 500px;
+        width: calc(100% - 40px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cookie-consent-content h3 {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+        color: #1a1a2e;
+      }
+      .cookie-consent-content p {
+        margin: 0 0 16px 0;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #444;
+      }
+      .cookie-consent-content a {
+        color: #6366f1;
+        text-decoration: underline;
+      }
+      .cookie-consent-content a:hover {
+        text-decoration: none;
+      }
+      .cookie-consent-content .btn {
+        background: #6366f1;
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .cookie-consent-content .btn:hover {
+        background: #4f46e5;
+      }
+    </style>
   </div>
 </footer>
 </body>
