@@ -20,7 +20,7 @@ a:hover{color:var(--accent-dark)}
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;
   box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:24px}
 .header-inner{display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:16px 24px;flex-wrap:wrap}
+  gap:20px;padding:16px 24px;flex-wrap:wrap;position:relative}
 .logo{font-size:22px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;
   transition:transform 0.2s ease}
 .logo:hover{transform:translateX(3px);text-decoration:none}
@@ -32,6 +32,25 @@ a:hover{color:var(--accent-dark)}
   border-radius:8px;transition:all 0.2s ease}
 .nav a:hover{background:var(--accent-soft);color:var(--accent);text-decoration:none}
 .nav .btn{margin-left:8px}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;background:transparent;border:none;cursor:pointer;
+  padding:8px;border-radius:8px;transition:background 0.2s ease;z-index:101}
+.mobile-menu-toggle:hover{background:var(--accent-soft)}
+.mobile-menu-toggle span{display:block;width:20px;height:2px;background:var(--ink);
+  border-radius:2px;transition:all 0.3s ease;margin:0 auto}
+.mobile-menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.mobile-menu-toggle.active span:nth-child(2){opacity:0;transform:translateX(-5px)}
+.mobile-menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* Cookie consent modal mobile styles */
+@media(max-width:768px){
+  .cookie-consent-modal{flex-direction:column;align-items:flex-start;padding:14px 16px}
+  .cookie-consent-content h3{font-size:15px}
+  .cookie-consent-content p{font-size:12px;margin-bottom:12px}
+  .cookie-consent-content .btn{width:100%;padding:10px 16px;font-size:13px}
+}
 
 /* Registration button - ensure it doesn't blend with background on hover */
 .nav .btn-register{background:var(--accent-gradient);color:#fff!important;border:0;box-shadow:0 2px 4px rgba(79,70,229,0.3);transition:all 0.2s ease}
@@ -167,12 +186,12 @@ textarea{min-height:130px;resize:vertical;line-height:1.6}
 .lesson-body code{background:var(--accent-soft);color:var(--accent-dark);
   padding:3px 8px;border-radius:6px;font-size:0.9em;
   font-family:"Fira Code",Consolas,"SFMono-Regular",Menlo,monospace;
-  border:1px solid rgba(79,70,229,0.15)}
+  border:1px solid rgba(79,70,229,0.15);word-break:break-word}
 .lesson-body pre{background:#1e293b;color:#e2e8f0;padding:20px 22px;
   border-radius:12px;overflow-x:auto;margin:0 0 1.4em;font-size:14px;line-height:1.6;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,0.3)}
+  box-shadow:inset 0 2px 8px rgba(0,0,0,0.3);max-width:100%}
 .lesson-body pre code{background:transparent;color:inherit;padding:0;
-  font-size:inherit;border:0}
+  font-size:inherit;border:0;word-break:normal}
 .lesson-actions{margin-top:30px;padding-top:24px;border-top:2px solid var(--line)}
 .lesson-actions p{margin-top:0}
 
@@ -219,8 +238,18 @@ tr:hover td{background:#f8fafc}
 @media(max-width:768px){
   .header-inner{padding:12px 16px}
   .logo{font-size:20px}
-  .nav{gap:4px}
-  .nav a{padding:6px 10px;font-size:14px}
+  
+  /* Mobile menu - show toggle button and hide nav by default */
+  .mobile-menu-toggle{display:flex}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;
+    flex-direction:column;padding:16px 24px;border-bottom:1px solid var(--line);
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);gap:4px}
+  .nav.active{display:flex}
+  .nav a{padding:12px 16px;font-size:16px;width:100%;border-radius:8px}
+  .nav a:hover{background:var(--accent-soft)}
+  .nav .btn{margin:8px 0 0 0;width:100%;justify-content:center}
+  .nav .btn-sm{padding:10px 16px;font-size:15px}
+  
   main{padding:24px 16px 60px}
   h1{font-size:28px}
   h2{font-size:22px}
@@ -231,6 +260,33 @@ tr:hover td{background:#f8fafc}
   .stat b{font-size:28px}
   .grid{grid-template-columns:1fr}
   .card{padding:20px}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .filters{grid-template-columns:1fr}
+  .lesson-row{flex-direction:column;align-items:flex-start;gap:8px}
+  .cookie-consent-modal{left:10px;right:10px;bottom:10px;width:auto;max-width:none}
+  
+  /* Lesson page mobile styles */
+  .lesson-body{font-size:16px;line-height:1.7}
+  .lesson-body h2{font-size:20px}
+  .lesson-body pre{padding:14px 16px;font-size:13px;overflow-x:auto}
+  .lesson-actions{margin-top:20px;padding-top:16px}
+  .lesson-actions .btn{width:100%;justify-content:center}
+  .chips{flex-wrap:wrap}
+  .tag{font-size:11px;padding:3px 10px}
+  .progress{height:10px}
+  aside.panel{margin-top:24px}
+  .lesson-row a{font-size:15px}
+  .btn-sm{width:auto}
+}
+
+/* Small phones */
+@media(max-width:400px){
+  .hero{padding:28px 16px}
+  .hero h1{font-size:26px}
+  .stats{grid-template-columns:1fr}
+  .container{padding:0 12px}
+  input[type=text],input[type=email],input[type=password],input[type=number],
+  select,textarea{font-size:16px}
 }
 
 /* Animations */

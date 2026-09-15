@@ -1,6 +1,22 @@
-# Icons
-static/icons/favicon.svg
+```
+# Compiled Python files
+__pycache__/
+*.pyc
 
-Wait, I need to reconsider this. The file 'static/icons/favicon.svg' is a source file that was modified, not a build artifact or temporary file. According to rule 7, I should not ignore source code files unless they are clearly generated or sensitive. Since this is just a favicon SVG file which appears to be part of the static assets, it should NOT be ignored.
+# Logs and temp files
+*.log
+*.tmp
 
-Output: (nothing)
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Build artifacts
+dist/
+build/
+```

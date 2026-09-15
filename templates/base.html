@@ -30,6 +30,11 @@
       </svg>
       Курсоград
     </a>
+    <button class="mobile-menu-toggle" aria-label="Меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <nav class="nav">
       <a href="{{ url_for('index') }}">Главная</a>
       <a href="{{ url_for('courses') }}">Курсы</a>
@@ -166,6 +171,33 @@
           acceptBtn.addEventListener('click', function() {
             localStorage.setItem('cookiesAccepted', 'true');
             modal.style.display = 'none';
+          });
+        }
+        
+        // Мобильное меню
+        var menuToggle = document.querySelector('.mobile-menu-toggle');
+        var nav = document.querySelector('.nav');
+        
+        if (menuToggle && nav) {
+          menuToggle.addEventListener('click', function() {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+          });
+          
+          // Закрываем меню при клике на ссылку
+          nav.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+              menuToggle.classList.remove('active');
+              nav.classList.remove('active');
+            });
+          });
+          
+          // Закрываем меню при клике вне его
+          document.addEventListener('click', function(e) {
+            if (!menuToggle.contains(e.target) && !nav.contains(e.target)) {
+              menuToggle.classList.remove('active');
+              nav.classList.remove('active');
+            }
           });
         }
       })();
